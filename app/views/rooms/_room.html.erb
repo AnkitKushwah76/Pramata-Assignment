@@ -1,1 +1,7 @@
-<div> <%= link_to room.name, room %> </div>
+<% if @rooms.present? %>
+  <% @rooms.each do |room| %>
+    <% if room.user_ids.include?(current_user.id) %>
+      <div><%= link_to room.name, room %></div>
+    <% end %>
+  <% end %>
+<% end %>

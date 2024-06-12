@@ -1,4 +1,6 @@
 class Room < ApplicationRecord
+  serialize :user_ids, JSON
+
   has_many :messages
 
   validates_uniqueness_of :name

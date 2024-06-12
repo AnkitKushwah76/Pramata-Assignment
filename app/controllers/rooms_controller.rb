@@ -19,10 +19,20 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.create(name: params["room"]["name"])
+    @room = Room.create!(name: params["room"]["name"], user_ids: [current_user.id])
   end
 
+
+  def add_people
+  room = Room.find(params['id'])
+  room.user_ids << current_user.id
+  end
+
+
+  private
+
   def get_room
+    @all_users = User.where.not(id: current_user.id)
     @room = Room.new
   end
 end
