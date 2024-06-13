@@ -1,12 +1,14 @@
 class MessagesController < ApplicationController
   def create
-    Message.create!(content: msg_params[:content], room_id: params[:room_id], user_id: current_user.id)
+    @message = Message.new(message_params)
+    if @message.save
+      redirect_to room_path(params[:room_id])
+    end
   end
 
   private
 
-  def msg_params
-    params.require(:message).permit(:content)
+  def message_params
+    params.require(:message).permit(:content, :image).merge(room_id: params[:room_id], user_id: current_user.id)
   end
-
 end
